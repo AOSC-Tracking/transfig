@@ -730,8 +730,13 @@ read_colordb(void)
 	FILE		*fp;
 #define MAX_LINE	100
 	char		s[MAX_LINE], s1[MAX_LINE];
+	char		*rgbfile;
 
-	fp = fopen(RGB_FILE, "r");
+	rgbfile = getenv("FIG2DEV_RGBFILE");
+	if (rgbfile == NULL) {
+		rgbfile = RGB_FILE;
+	}
+	fp = fopen(rgbfile, "r");
 	if (fp == NULL) {
 		Xcolors = defaultXcolors;
 		numXcolors = sizeof(defaultXcolors) / sizeof(struct color_db);
